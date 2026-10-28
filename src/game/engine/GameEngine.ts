@@ -3,7 +3,7 @@ import { createEmptyBoard, isPositionValid, mergePieceToBoard, clearFullLines } 
 import { getTetrominoShape, getShapeFromPiece, generatePiece, getSpawnPosition } from '@/game/models/Piece';
 
 export default class GameEngine {
-    private gameState: GameState
+    private gameState: GameState;
     private listeners: Set<GameStateListener>;
 
     private dropAccumulator = 0; // 自动下落累计时间，单位：ms
