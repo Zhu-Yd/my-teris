@@ -19,7 +19,7 @@ export default class GameRenderer {
     }
 
     /** 每次完整重绘，避免活动方块移动后留下上一帧的图像。 */
-    render(state: GameState): void {
+    render(state: Readonly<GameState>): void {
         const rowCount = state.board.length;
         const columnCount = state.board[0]?.length ?? 0;
         const pixelWidth = columnCount * CELL_SIZE;
