@@ -1,3 +1,5 @@
+import type { RefObject } from "react";
+
 export type Cell = 0 | 1;
 export type Position = { x: number, y: number };
 export type Shape = Cell[][];
@@ -24,4 +26,16 @@ export interface GameState {
     level: number;
     lines: number;
     status: GameStatus;
+}
+
+export interface UseTetrisResult {
+    canvasRef: RefObject<HTMLCanvasElement | null>;
+    state: Readonly<GameState> | null;
+    start: () => void;
+    pause: () => void;
+    resume: () => void;
+    reset: () => void;
+    movePiece: (direction: MoveDirection) => void;
+    rotatePiece: () => void;
+    hardDrop: () => void;
 }

@@ -1,26 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { RefObject } from "react";
 import GameEngine from "@/game/engine/GameEngine";
 import GameRenderer from "@/game/rendering/GameRenderer";
-import type { GameState, MoveDirection } from "@/game/types/game";
+import type { GameState, MoveDirection,UseTetrisResult } from "@/game/types/game";
 
-interface UseTetrisResult {
-    canvasRef: RefObject<HTMLCanvasElement | null>;
-    state: Readonly<GameState> | null;
-    start: () => void;
-    pause: () => void;
-    resume: () => void;
-    reset: () => void;
-    movePiece: (direction: MoveDirection) => void;
-    rotatePiece: () => void;
-    hardDrop: () => void;
-}
 
 /**
- * 管理俄罗斯方块引擎和 Canvas 渲染循环。
- * 每帧只更新引擎并重绘 Canvas; React 状态只在引擎发出状态变更时更新。
+ * 管理俄罗斯方块引擎和 Canvas 渲染循环
+ * 只更新引擎并重绘 Canvas; React状态只在引擎发出状态变更时更新
  */
-export default function useTeris(): UseTetrisResult {
+export default function useTetris(): UseTetrisResult {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const engineRef = useRef<GameEngine | null>(null);
     const [state, setState] = useState<Readonly<GameState> | null>(null);
@@ -38,7 +26,7 @@ export default function useTeris(): UseTetrisResult {
         // 游戏画面由 Canvas 更新, 不需要把棋盘绘制过程交给 React
         const unsubscribe = engine.subscribe(nextState => {
             setState(nextState);
-            renderer.render(engine.getGameState());
+            renderer.render(nextState);
         });
         let animationFrameId = 0;
         let previousFrameTime: number | null = null;
